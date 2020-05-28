@@ -41,7 +41,8 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         // Egalité : gestion du A ou Deuce
         if (m_score1 == m_score2) {
-            return getStrForEquality();
+            // Si < 3 : score1-All , sinon DEUCE
+            return m_score1 < 3 ? getScoreStr(getStrForPoints(m_score1), STR_ALL) : STR_DEUCE;
         }
 
         // > 40 : Gestion Avantage ou victoire
@@ -50,15 +51,6 @@ public class TennisGame1 implements TennisGame {
         }
 
         // < 40 et non egal : score classique
-        return getStrForScoreUnder40NoEquality();
-    }
-
-    /**
-     * Traduit le score dans le cas où il n'y a pas égalité et les scores sont < 40
-     *
-     * @return
-     */
-    private String getStrForScoreUnder40NoEquality() {
         return getScoreStr(getStrForPoints(m_score1), getStrForPoints(m_score2));
     }
 
@@ -84,14 +76,7 @@ public class TennisGame1 implements TennisGame {
         return getWinStr(player2Name);
     }
 
-    /**
-     * Traduit le score si il y a egalité
-     * Si < 3 : score1-All , sinon DEUCE
-     * @return Le score en String
-     */
-    private String getStrForEquality() {
-        return m_score1 < 3 ? getScoreStr(getStrForPoints(m_score1), STR_ALL) : STR_DEUCE;
-    }
+
 
     /**
      * Concatenation de Advantage et le nom du joueur

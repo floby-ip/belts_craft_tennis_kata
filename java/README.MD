@@ -5,7 +5,8 @@
 4) Extraction des méthodes pour les cas de figure : Egalité, Avantage/victoire, autre
 5) Utilisation de .equals au lieu de == sur les string \
 6) Creation d'une methode score -> string pour les score de 0 à 40
-Temps : 37 minutes
+7) Simplification de certaines méthodes et suppression des méthodes "simples" appelées une seule fois
+Temps : 42 minutes
 
 # TENNIS 2
 
