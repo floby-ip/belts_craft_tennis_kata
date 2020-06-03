@@ -14,4 +14,4 @@ Temps : 42 minutes
 3) Utilisation de constantes pour les valeurs
 4) suppression unused methods
 5) extraction des methodes de calcul + utilisation de returns (correction conditions pour pouvoir utiliser return <4 ==> <3)
-
+6) rationalisation des conditions afin de regrouper les méthodes
