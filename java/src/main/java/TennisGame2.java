@@ -16,8 +16,6 @@ public class TennisGame2 implements TennisGame
     public int p1point = 0;
     public int p2point = 0;
     
-    public String p1res = "";
-    public String p2res = "";
     private String player1Name;
     private String player2Name;
 
@@ -27,7 +25,7 @@ public class TennisGame2 implements TennisGame
     }
 
     public String getScore(){
-        if (p1point == p2point) {
+        if (p1point == p2point) { // p1 == p2
             if (p1point < 3) {
                 return getScoreIfEqualityLessThan4();
             } else {
@@ -35,61 +33,53 @@ public class TennisGame2 implements TennisGame
             }
         }
         // p1 != p2
-        
-        if ( p1point < 4 && p2point < 4)
+        if ( p1point < 4 && p2point < 4) // Pas de gestion avantage / win
         {
             return getScoreIfP1neqP2andP1lt4andP2lt4();
         }
 
-        if (p1point > p2point && p2point >= 3 && p1point - p2point < 2)
+        if (Math.max(p1point, p2point) - Math.min(p1point, p2point) < 2) // gestion avantage
         {
-            return SCORE_STR_ADVANTAGE + player1Name;
+            return SCORE_STR_ADVANTAGE + getPlayerWithHighestScoreName() ;
         }
-        
-        if (p2point > p1point && p1point >= 3 && p2point - p1point < 2)
-        {
-            return SCORE_STR_ADVANTAGE + player2Name;
-        }
-        
-        if (p1point >=4 && p2point >=0 && (p1point - p2point)>=2)
-        {
-            return SCORE_STR_WIN_FOR + player1Name;
-        }
-        return SCORE_STR_WIN_FOR + player2Name;
+
+        // victoire
+        return SCORE_STR_WIN_FOR + getPlayerWithHighestScoreName();
     }
 
+    /**
+     * Returns the name of the player with the highest score
+     * @return
+     */
+    private String getPlayerWithHighestScoreName(){
+        return p1point > p2point? player1Name : player2Name;
+    }
+
+    /**
+     * Returns SCORE1-SCORE2 (simple case)
+     * @return
+     */
     private String getScoreIfP1neqP2andP1lt4andP2lt4() {
         return getPointsAsStr(p1point)
                 + SCORE_SEPARATOR
                 + getPointsAsStr(p2point);
     }
 
+    /**
+     * Returns the String equivalent of the points
+     * @param points
+     * @return
+     */
     private String getPointsAsStr(int points){
         return POINTS_AS_STR_ARRAY[points];
     }
 
-    private String getScoreIfP2gt0andP1eq0() {
-        if (p2point ==1)
-            p2res = SCORE_STR_FIFTEEN;
-        if (p2point ==2)
-            p2res = SCORE_STR_THIRTY;
-        if (p2point ==3)
-            p2res = SCORE_STR_FORTY;
-
-        p1res = SCORE_STR_LOVE;
-        return p1res + SCORE_SEPARATOR + p2res;
-    }
-
+    /**
+     * Returns SCORE1-ALL (equality)
+     * @return
+     */
     private String getScoreIfEqualityLessThan4() {
-        String score = "";
-        if (p1point ==0)
-            score = SCORE_STR_LOVE;
-        if (p1point ==1)
-            score = SCORE_STR_FIFTEEN;
-        if (p1point ==2)
-            score = SCORE_STR_THIRTY;
-        score += SCORE_SEPARATOR + SCORE_STR_ALL;
-        return score;
+        return getPointsAsStr(p1point) + SCORE_SEPARATOR + SCORE_STR_ALL;
     }
 
     public void P1Score(){
