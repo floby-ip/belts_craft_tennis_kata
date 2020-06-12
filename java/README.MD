@@ -16,3 +16,9 @@ Temps : 42 minutes
 5) extraction des methodes de calcul + utilisation de returns (correction conditions pour pouvoir utiliser return <4 ==> <3)
 6) rationalisation des conditions afin de regrouper les méthodes
 Temps : 50 minutes
+
+# TENNIS 3
+1) renommage des variables
+2) extraction tableau des scores en string
+3) suppression else inutile (le return suffit)
+4) remplacement ALL, etc... par const + modification return 

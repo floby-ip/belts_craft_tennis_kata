@@ -1,36 +1,49 @@
 
 public class TennisGame3 implements TennisGame {
-    
-    private int p2;
-    private int p1;
-    private String p1N;
-    private String p2N;
 
-    public TennisGame3(String p1N, String p2N) {
-        this.p1N = p1N;
-        this.p2N = p2N;
+    private static final String[] SCORES_AS_STRING = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+    private static final String SCORE_STR_ALL = "All";
+    private static final String SCORE_STR_SEPARATOR = "-";
+    private static final String SCORE_STR_ADVANTAGE = "Advantage ";
+    private static final String SCORE_STR_WIN = "Win for ";
+    private static final String SCORE_STR_DEUCE = "Deuce";
+
+    private int scoreP1;
+    private int scoreP2;
+    private String nameP1;
+    private String nameP2;
+
+    public TennisGame3(String nameP1, String nameP2) {
+        this.nameP1 = nameP1;
+        this.nameP2 = nameP2;
     }
 
     public String getScore() {
-        String s;
-        if (p1 < 4 && p2 < 4 && !(p1 + p2 == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"}; 
-            s = p[p1];
-            return (p1 == p2) ? s + "-All" : s + "-" + p[p2];
-        } else {
-            if (p1 == p2)
-                return "Deuce";
-            s = p1 > p2 ? p1N : p2N;
-            return ((p1-p2)*(p1-p2) == 1) ? "Advantage " + s : "Win for " + s;
+        if (scoreP1 < 4 && scoreP2 < 4 && (scoreP1 + scoreP2 != 6)) {
+            return concat(SCORES_AS_STRING[scoreP1], SCORE_STR_SEPARATOR, scoreP1 == scoreP2 ?  SCORE_STR_ALL : SCORES_AS_STRING[scoreP2]);
         }
+        if (scoreP1 == scoreP2) {
+            return SCORE_STR_DEUCE;
+        }
+
+        String currentWinner = scoreP1 > scoreP2 ? nameP1 : nameP2;
+        return concat (Math.abs(scoreP1 - scoreP2) == 1 ? SCORE_STR_ADVANTAGE : SCORE_STR_WIN, currentWinner);
     }
     
     public void wonPoint(String playerName) {
-        if (playerName == "player1")
-            this.p1 += 1;
-        else
-            this.p2 += 1;
-        
+        if (playerName.equals(nameP1)){
+            this.scoreP1 += 1;
+        } else {
+            this.scoreP2 += 1;
+        }
+    }
+
+    private String concat(String ... vars){
+        StringBuilder sb = new StringBuilder();
+        for(String s : vars){
+            sb.append(s);
+        }
+        return sb.toString();
     }
 
 }
