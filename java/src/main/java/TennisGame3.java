@@ -19,14 +19,22 @@ public class TennisGame3 implements TennisGame {
     }
 
     public String getScore() {
+        // P1 <= 40 && P2 <= 40 && (!DEUCE)
         if (scoreP1 < 4 && scoreP2 < 4 && (scoreP1 + scoreP2 != 6)) {
-            return concat(SCORES_AS_STRING[scoreP1], SCORE_STR_SEPARATOR, scoreP1 == scoreP2 ?  SCORE_STR_ALL : SCORES_AS_STRING[scoreP2]);
+            if(scoreP1 != scoreP2){ // P1 != P2 ==> score1-Score2
+                return concat(SCORES_AS_STRING[scoreP1], SCORE_STR_SEPARATOR, SCORES_AS_STRING[scoreP2]);
+            }
+            // P1 == P2 : score1-All
+            return concat(SCORES_AS_STRING[scoreP1], SCORE_STR_SEPARATOR, SCORE_STR_ALL);
         }
-        if (scoreP1 == scoreP2) {
+        // P1 >= 40 || P2 >= 40
+        if (scoreP1 == scoreP2) { // P1 == P2 == 40
             return SCORE_STR_DEUCE;
         }
 
+        // know who is above the other
         String currentWinner = scoreP1 > scoreP2 ? nameP1 : nameP2;
+        // advantage ? advantage : victory
         return concat (Math.abs(scoreP1 - scoreP2) == 1 ? SCORE_STR_ADVANTAGE : SCORE_STR_WIN, currentWinner);
     }
     
